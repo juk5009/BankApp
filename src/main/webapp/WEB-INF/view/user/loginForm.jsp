@@ -15,7 +15,7 @@
 <body>
     <h1>로그인페이지</h1>
     <hr />
-    <form action="/login" method="post">
+    <form action="/login" method="post" enctype="application/x-www-fomr-urlencoded">
         <input type="text" name="username" placeholder="Enter username" /><br />
         <input type="password" name="password" placeholder="Enter password" /><br />
         <button>로그인</button>

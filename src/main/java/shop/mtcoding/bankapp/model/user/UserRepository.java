@@ -5,10 +5,13 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import shop.mtcoding.bankapp.dto.user.JoinReqDto;
+import shop.mtcoding.bankapp.dto.user.LoginReqDto;
 
 @Mapper
 public interface UserRepository {
     public int insert(JoinReqDto joinReqDto);
+
+    public User findByUsernameAndPassword(LoginReqDto loginReqDto);
 
     public int updateById(User user);
 
