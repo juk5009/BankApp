@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import shop.mtcoding.bankapp.dto.account.AccountSaveReqDto;
 import shop.mtcoding.bankapp.dto.user.JoinReqDto;
 import shop.mtcoding.bankapp.dto.user.LoginReqDto;
 import shop.mtcoding.bankapp.handler.ex.CustomException;
@@ -27,16 +26,6 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
-
-    @PostMapping("/account")
-    public String save(AccountSaveReqDto accountSaveReqDto) {
-        if (accountSaveReqDto.getNumber() == null || accountSaveReqDto.getNumber().isEmpty()) {
-            throw new CustomException("number를 입력해주세요", HttpStatus.BAD_REQUEST);
-        }
-        if (accountSaveReqDto.getPassword() == null || accountSaveReqDto.getPassword().isEmpty()) {
-            throw new CustomException("password를 입력해주세요", HttpStatus.BAD_REQUEST);
-        }
-    }
 
     @PostMapping("/login")
     public String login(LoginReqDto loginReqDto) {
