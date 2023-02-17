@@ -8,6 +8,13 @@
         select * from account_tb
     </select>
 
+    <select id="findByIdWithUser" resultType="shop.mtcoding.bankapp.dto.account.AccountDetailRespDto">
+        select at.id, at.number, at.balance, at.user_id, (select fullname from user_tb
+        ut where ut.id = at.user_id) fullname
+        from account_tb at
+        where at.id = #{id}
+    </select>
+
     <select id="findByUserId" resultType="shop.mtcoding.bankapp.model.account.Account">
         SELECT * FROM ACCOUNT_TB WHERE user_id = #{principalId}
     </select>  
