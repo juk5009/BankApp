@@ -63,18 +63,18 @@ public class AccountService {
     }
 
     @Transactional
-    public int 계좌입금(AccountDepositReqDto accountDepositReqDto) {
-        // 1. 계좌존재 여부
+    public void 입금하기(AccountDepositReqDto accountDepositReqDto) {
+        // 1. 입금계좌 존재 여부
         Account accountPS = accountRepository.findByNumber(accountDepositReqDto.getDAccountNumber());
         if (accountPS == null) {
             throw new CustomException("계좌가 없는데?", HttpStatus.BAD_REQUEST);
         }
 
-        // 4. 입금
-        accountPS.deposit(accountDepositReqDto.getAmount());
-        accountRepository.updateById(accountPS);
+        // 2. 입금하기 (의미 있는 메서드를 호출)
+        accountPS.deposit(accountDepositReqDto.getAmount()); // 모델에 상태 변경
+        accountRepository.updateById(accountPS); // 디비에 commit
 
-        // 5. 히스토리 (거래내역)
+        // 3. 입금 트랜잭션 만들기 (히스토리)
         History history = new History();
         history.setAmount(accountDepositReqDto.getAmount());
         history.setWAccountId(null);
@@ -83,8 +83,5 @@ public class AccountService {
         history.setDBalance(accountPS.getBalance());
 
         historyRepository.insert(history);
-
-        // 6. 해당 계좌의 id를 return
-        return accountPS.getId();
     }
 }
